@@ -43,44 +43,59 @@ int mainMenu(int x) {
     int y;
     // make a try/catch to handle issue
 
-    do {
+    try {
+        if (x <= 0 || x >= 4)
+            throw "You entered an invalide number. Please enter a valid number.";
+        do {
+            switch (x) {
+                //if the player decides to play the game they must enter an interger value of 1.
+            case 1:
+                cout << "You are plaing the game";
+                // here is where the start game function will go
 
-        switch (x) {
-            //if the player decides to play the game they must enter an interger value of 1.
-        case 1:
-            cout << "You are plaing the game";
-            // here is where the start game function will go
-            
-            // the timer should be in here as well.
-            break;
-            //if the player decides to read the game rules first. they must enter an interger value of 2.
-        case 2:
-            cout << "These are the rules:";
-            printf("\nMain Menu:\n");
-            printf("1) Play Game \n2) Game Rules \n3) Exit \n\n What will you do: ");
-            cin >> y;
-            mainMenu(y);
-            break;
-            //if the player decides they dont want to play. They may exit the game by entering an interger value of 3.
-        case 3:
-            return 0;
-            //this comes up if the player entered anything else other than a value between 1-3.
-        default:
-            // this part of the function checks to see if the entered a number. if not, 
-            while(!(cin >> x)){
-            printf("\n\t\tError: code_Id_tent");
+                // the timer should be in here as well.
+                break;
+                //if the player decides to read the game rules first. they must enter an interger value of 2.
+            case 2:
+                cout << "These are the rules:";
+                printf("\nMain Menu:\n");
+                printf("1) Play Game \n2) Game Rules \n3) Exit \n\n What will you do: ");
+                cin >> y;
+                mainMenu(y);
+                break;
+                //if the player decides they dont want to play. They may exit the game by entering an interger value of 3.
+            case 3:
+                return 0;
+                //this comes up if the player entered anything else other than a value between 1-3.
+            default:
+                // this part of the function checks to see if the entered a number. if not, 
+                while (!(cin >> x)) {
+                    printf("\n\t\tError: code_Id_tent");
+                    printf("\nMain Menu:\n");
+                    printf("1) Play Game \n2) Game Rules \n3) Exit \n\n Enter choice: ");
+                    cin.clear();
+                    cin.ignore(15, '\n');
+                    cin >> y;
+                    mainMenu(y);
+                }
+                break;
+            }
+        } while (y != 3);
+
+    }
+    catch (const char* e) {
+            cout << "\n\t\tError: code_Id_tent. " << endl << e;
             printf("\nMain Menu:\n");
             printf("1) Play Game \n2) Game Rules \n3) Exit \n\n Enter choice: ");
             cin.clear();
             cin.ignore(15, '\n');
             cin >> y;
             mainMenu(y);
-            }
-            break;
         }
-    } while ( y != 3 );
     
 }
+
+
 /*
 void isGreater() {
     if ((cin >> x) > 3 || x <= 0) {
