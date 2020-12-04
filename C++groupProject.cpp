@@ -6,17 +6,20 @@
 *The player must move fast and make critical choices for they only have 12 gongs of time along with the ever presents of dangerous animals as you travers the Glades in hopes to rescue the few survivors.
 */
 
-// *********************** Prototypes ********************************* //
-int mainMenu(int x);
-
-
-
-// *********************** functions ********************************** //
-
-
 
 #include <iostream>
 using namespace std;
+
+// *********************** Prototypes ********************************* //
+int mainMenuOptions(int x);
+void mainMenuString();
+
+
+// *********************** functions ********************************** //
+void mainMenuString() {
+    cout << "\nMain Menu:\n";
+    cout << "1) Play Game \n2) Game Rules \n3) Exit \n\n What will you do: ";
+}
 
 
 int main()
@@ -27,10 +30,9 @@ int main()
     //This is the main menu for the Everglades game 
 
     printf("Welcome to the Everglades Ranger! \n Your timing is impeccable! We need you to go and find some Survivers!\n A group of people have sent an SoS and are stranded. You must hurry before one of the many dangerous \n animalas in the Everglades gets to them first.");
-    printf("\n\nMain Menu:\n");
-    printf("1) Play Game \n2) Game Rules \n3) Exit \n\n Enter choice: ");
+    mainMenuString();
     cin >> option;
-    mainMenu(option);
+    mainMenuOptions(option);
 
 }
 
@@ -38,14 +40,15 @@ int main()
 //this is the mainMenu decision tree. The outcome is based on the input of the user
 
 
-int mainMenu(int x) {
+int mainMenuOptions(int x) {
 
     int y;
-    // make a try/catch to handle issue
+    // here the try/catch is validating the users input. We check to see if the user entered an invalid number or a character and 
 
     try {
-        if (x <= 0 || x >= 4)
+        if (x <= 0 || x >= 4 || !(cin >> x))
             throw "You entered an invalide number. Please enter a valid number.";
+
         do {
             switch (x) {
                 //if the player decides to play the game they must enter an interger value of 1.
@@ -58,39 +61,29 @@ int mainMenu(int x) {
                 //if the player decides to read the game rules first. they must enter an interger value of 2.
             case 2:
                 cout << "These are the rules:";
-                printf("\nMain Menu:\n");
-                printf("1) Play Game \n2) Game Rules \n3) Exit \n\n What will you do: ");
+
+                mainMenuString();
+                cin.clear();
+                cin.ignore(20, '\n');
                 cin >> y;
-                mainMenu(y);
+                mainMenuOptions(y);
                 break;
-                //if the player decides they dont want to play. They may exit the game by entering an interger value of 3.
-            case 3:
+                
+            case 3://if the player decides they dont want to play. They may exit the game by entering an interger value of 3.
+                cout << "\n You have left the game.";
+
                 return 0;
-                //this comes up if the player entered anything else other than a value between 1-3.
-            default:
-                // this part of the function checks to see if the entered a number. if not, 
-                while (!(cin >> x)) {
-                    printf("\n\t\tError: code_Id_tent");
-                    printf("\nMain Menu:\n");
-                    printf("1) Play Game \n2) Game Rules \n3) Exit \n\n Enter choice: ");
-                    cin.clear();
-                    cin.ignore(15, '\n');
-                    cin >> y;
-                    mainMenu(y);
-                }
                 break;
             }
         } while (y != 3);
-
     }
     catch (const char* e) {
             cout << "\n\t\tError: code_Id_tent. " << endl << e;
-            printf("\nMain Menu:\n");
-            printf("1) Play Game \n2) Game Rules \n3) Exit \n\n Enter choice: ");
+            mainMenuString();
             cin.clear();
-            cin.ignore(15, '\n');
+            cin.ignore(20, '\n');
             cin >> y;
-            mainMenu(y);
+            mainMenuOptions(y);
         }
     
 }
