@@ -1,102 +1,131 @@
-// C++groupProject.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-/* Summary of the program:
-* 
-*This program is a texted based game, that takes place in the everglades. The Ranger (aka the player) is tasked with saving a group of survivors.
-*The player must move fast and make critical choices for they only have 12 gongs of time along with the ever presents of dangerous animals as you travers the Glades in hopes to rescue the few survivors.
-*/
-
+// File name :
+// Authors: Luis Quinones, Jeyden Pena and Deon Rennie
+// Date: December 9th, 2020
+// Program Description:
+// Input: 
+// Processing:
+// Output:
 
 #include <iostream>
+#include <string>
 using namespace std;
 
-// *********************** Prototypes ********************************* //
-int mainMenuOptions(int x);
-void mainMenuString();
+//prototypes
+void gameRules();
+void menu();
+void play(char[][5], char);
+void initBoard(char[][5]);
+void showBoard(char[][5]);
 
 
-// *********************** functions ********************************** //
-void mainMenuString() {
-    cout << "\nMain Menu:\n";
-    cout << "1) Play Game \n2) Game Rules \n3) Exit \n\n What will you do: ";
-}
+// Function to play the Game
 
+void play(char b[][5], char symbol) {
+    int r, c;
 
-int main()
-{
-    // variables 
-    int option;
+    cout << "Enter row and col: ";
+    cin >> r >> c;
 
-    //This is the main menu for the Everglades game 
+    //input validation
+    while (b[r][c] != ' ') {
 
-    printf("Welcome to the Everglades Ranger! \n Your timing is impeccable! We need you to go and find some Survivers!\n A group of people have sent an SoS and are stranded. You must hurry before one of the many dangerous \n animalas in the Everglades gets to them first.");
-    mainMenuString();
-    cin >> option;
-    mainMenuOptions(option);
+        cout << "Wrong move" << endl;
+        cout << "Enter row and col: ";
 
-}
-
-// *********************** functions ********************************** //
-//this is the mainMenu decision tree. The outcome is based on the input of the user
-
-
-int mainMenuOptions(int x) {
-
-    int y;
-    // here the try/catch is validating the users input. We check to see if the user entered an invalid number or a character and 
-
-    try {
-        if (x <= 0 || x >= 4 || !(cin >> x))
-            throw "You entered an invalide number. Please enter a valid number.";
-
-        do {
-            switch (x) {
-                //if the player decides to play the game they must enter an interger value of 1.
-            case 1:
-                cout << "You are plaing the game";
-                // here is where the start game function will go
-
-                // the timer should be in here as well.
-                break;
-                //if the player decides to read the game rules first. they must enter an interger value of 2.
-            case 2:
-                cout << "These are the rules:";
-
-                mainMenuString();
-                cin.clear();
-                cin.ignore(20, '\n');
-                cin >> y;
-                mainMenuOptions(y);
-                break;
-                
-            case 3://if the player decides they dont want to play. They may exit the game by entering an interger value of 3.
-                cout << "\n You have left the game.";
-
-                return 0;
-                break;
-            }
-        } while (y != 3);
     }
-    catch (const char* e) {
-            cout << "\n\t\tError: code_Id_tent. " << endl << e;
-            mainMenuString();
-            cin.clear();
-            cin.ignore(20, '\n');
-            cin >> y;
-            mainMenuOptions(y);
+    b[r][c] = symbol;
+
+};
+
+// Rows and Columns
+void initBoard(char b[][5]) {
+    //Rows
+    for (int i = 0; i < 5; i++) {
+        //Columns
+        for (int j = 0; j < 5; j++) {
+            b[i][j] = ' ';
         }
-    
-}
+    }
+};
 
+// Show board function
+void showBoard(char b[][5]) {
+    for (int row = 0; row < 5; row++) {
+        cout << "|";
 
-/*
-void isGreater() {
-    if ((cin >> x) > 3 || x <= 0) {
+        for (int col = 0; col < 5; col++) {
+            cout << b[row][col] << "|";
+
+        }
+        cout << endl;
 
     }
+    cout << endl;
+
+};
+
+// Insert a menu
+void menu()
+{
+    cout << "\nWelcome to the Everglades Ranger! \n Your timing is impeccable! We need you to go and find some Survivers!\n A group of people have sent an SoS and are stranded. You must hurry before one of the many dangerous \n animalas in the Everglades gets to them first.";
+    cout << "\n\nMain Menu:\n";
+    cout << "1) See Rules \n";
+    cout << "2) Play Game \n";
+    cout << "3) Quit \n";
+    cout << endl;
+};
+
+
+void gameRules()
+{
+    //Enter all game rules here
+    cout << "\tLost in the Everglades\n";
+    cout << "\t\tRules";
+    cout << " ";
+    cout << endl;
+};
+
+
+//************************************************ Driver ********************************************************************
+int main()
+{    // Variables
+    int choice, turns = 0;
+    
+    //the game board
+    char board[5][5] = { {' ',' ',' ',' ',' '},{' ',' ',' ',' ',' '},{' ',' ',' ',' ',' '},{' ',' ',' ',' ',' '},{' ',' ',' ',' ',' '} };
+
+    // Display Menu
+    menu();
+
+    while (true) {
+        cout << "Please enter your choice: ";
+        cin >> choice;
+        switch (choice) {
+        case 1:
+            //function for rules
+            gameRules();
+            break;
+        case 2:
+            //make a loop based on the gong count
+                initBoard(board);
+                showBoard(board);
+            while (turns < 6) {
+
+            //function to play games
+                play(board, 'R');
+                turns++;
+            }
+
+            break;
+        case 3:
+            cout << "Thanks for playing\n\n";
+            exit(3);
+            break;
+            //Validation
+        default:cout << "Please make a valid choice\n";
+            break;
+
+        }
+    }
 }
-*/
 
-
-
-/* This program was created by Deon, Jayden and Luis */
